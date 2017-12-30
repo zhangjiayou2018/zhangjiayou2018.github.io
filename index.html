@@ -6,18 +6,24 @@
 <script src="./jquery-1.7.1.min.js"></script>
 <body>
   <div id="div1" class="middle">
-  <div> <img src="./img/bchao.jpg" width="360" height="240"/></div>
-  <br>
-  <div class="div-inline"> 距离出生还有：</div>
-  <div class="div-inline" id="timer1"></div>
+    <div> <img src="./img/bchao.jpg" width="360" height="240"/></div>
+    <br>
+    <div class="div-inline"> 距离出生还有：</div>
+    <div class="div-inline" id="timer1"></div>
   </div>
   <br>
-  <p class="middle">加载中...</p>
+  <p id="adult" class="middle">加载中...</p>
   <br>
-  <div id="div3" class="middle" style="display: none">
-  <div class="div-inline">距离高考还有：</div>
-  <div class="div-inline" id="timer2">
+  <div id="div2" class="middle" style="display: none">
+    <div class="div-inline">距离18岁还有：</div>
+    <div class="div-inline" id="timer2"></div>
   </div>
+  <br>
+  <p id="gaokao" class="middle" style="display: none">加载中...</p>
+  <br>
+    <div id="div3" class="middle" style="display: none">
+    <div class="div-inline">距离高考还有：</div>
+    <div class="div-inline" id="timer3"></div>
   </div>
   <footer>
   <h2><i>出品人:</i> 张翰&赵娜</h2>
@@ -33,7 +39,6 @@
   interval = setInterval(go, 1000);
   list.push({ ele: document.getElementById(id), time: time });
   }
-
   function go() {
   for (var i = 0; i < list.length; i++) {
   list[i].ele.innerHTML = getTimerString(list[i].time ? list[i].time -= 1 : 0);
@@ -41,7 +46,6 @@
   list.splice(i--, 1);
   }
   }
-
   function getTimerString(time) {
   d = Math.floor(time / 86400),
   h = Math.floor((time % 86400) / 3600),
@@ -52,21 +56,28 @@
   else return "时间到";
   }
   } ();
-
   var today = new Date().getTime();
-  var chusheng = new Date("2018/4/15 00:00:00").getTime();
+  var birth = new Date("2018/4/15 00:00:00").getTime();
+  var adult = new Date("2035/1/1 00:00:00").getTime();
   var gaokao = new Date("2036/6/6 09:00:00").getTime();
-  juChusheng = (chusheng - today)/1000;
-  juGaokao = (gaokao - today)/1000;
 
-  addTimer("timer1", juChusheng);
-  addTimer("timer2", juGaokao);
+  toBirth = (birth - today)/1000;
+  toAdult = (adult - today)/1000;
+  toGaokao = (gaokao - today)/1000;
+
+  addTimer("timer1", toBirth);
+  addTimer("timer2", toAdult);
+  addTimer("timer3", toGaokao);
 </script>
 
 <script type="text/javascript">
 $(function(){
-  $("p").fadeOut(5000,function(){
-  $("#div3").show();
+  $("#adult").fadeOut(4000,function(){
+    $("#div2").show();
+    $("#gaokao").show();
+    $("#gaokao").fadeOut(4000,function(){
+      $("#div3").show();
+    });
   });
 })
 </script>
@@ -102,7 +113,6 @@ footer h2{
   position: absolute;
   width: 540px;
 }
-
 footer h2 i{
 font-style:normal;
 color:#888;
